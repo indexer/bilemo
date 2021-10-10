@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg"
+      android:fitsSystemWindows="true"
+      android:paddingBottom="@dimen/fragment_vertical_margin"
+      android:paddingLeft="@dimen/fragment_horizontal_margin"
+      android:paddingRight="@dimen/fragment_horizontal_margin"
+      android:paddingTop="@dimen/fragment_vertical_margin"
+      tools:context=".login.LoginFragment"
+      >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="8dp"
+        >
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_margin="16dp"
+          >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:enabled="true"
+            android:fontFamily="@font/sailec_bold"
+            android:text="@string/action_sign_in_short"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rememberToLogin"
+            />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/rememberToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:checked="@{loginModel.remeberUserPassword}"
+            android:fontFamily="@font/sailec_regular"
+            android:text="remember to login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/group_divider"
+            app:OnCheckChanged="@{()->loginModel.onCheckChange(rememberToLogin.isChecked())}"
+            />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/group_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/country"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:fontFamily="font/sailec_regular.otf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="@string/prompt_user_name"
+              android:inputType="text"
+              android:onTextChanged="@{loginModel::onUserNameChanged}"
+              android:selectAllOnFocus="true"
+              android:text="@={loginModel.userName}"
+              />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:fontFamily="font/sailec_regular.otf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:passwordToggleEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:hint="@string/prompt_password"
+              android:imeActionLabel="@string/action_sign_in_short"
+              android:imeOptions="actionDone"
+              android:inputType="textPassword"
+              android:onTextChanged="@{loginModel::onTextChanged}"
+              android:selectAllOnFocus="true"
+              android:text="@={loginModel.userPassword}"
+              />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_gap"
+            android:hint="@string/country"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            >
+          <com.google.android.material.textfield.MaterialAutoCompleteTextView
+              android:id="@+id/selectedCountry"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="none"
+              android:text="@{loginModel.userCountry}"
+              app:OnItemSelected="@{()->loginModel.doOnDropDownChange(selectedCountry.getText())}"
+              app:countries="@{loginModel.getCountriesForAdapter(context)}"
+              />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+  <data>
+    <variable
+        name="loginModel"
+        type="com.indexer.bilemo.login.viewmodel.LoginViewModel"
+        />
+  </data>
+</layout>

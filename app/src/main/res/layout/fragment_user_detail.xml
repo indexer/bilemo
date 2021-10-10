@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:focusableInTouchMode="false"
+      >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_user_detail"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/user_detail_title"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="@dimen/default_gap"
+        android:id="@+id/nestedView"
+        android:layout_below="@+id/mapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/mapFragment"
+          android:layout_margin="8dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:cardBackgroundColor="@color/white"
+          app:cardCornerRadius="10dp"
+          app:cardElevation="2dp"
+          >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/userName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/sailec_bold"
+              android:padding="8dp"
+              android:textColor="@color/primaryColor"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              />
+
+          <TextView
+              android:id="@+id/userAddress"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/sailec_regular"
+              android:padding="8dp"
+              android:textColor="@color/primaryColor"
+              android:textSize="14sp"
+              android:textStyle="bold"
+
+              />
+
+          <TextView
+              android:id="@+id/userWebsite"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/sailec_regular"
+              android:padding="8dp"
+              android:textColor="@color/primaryColor"
+              android:textStyle="bold"
+              />
+
+          <TextView
+              android:id="@+id/user_email"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/sailec_regular"
+              android:padding="8dp"
+              android:textColor="@color/primaryColor"
+              android:textStyle="bold"
+              />
+
+          <TextView
+              android:id="@+id/user_company_name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/sailec_regular"
+              android:padding="8dp"
+              android:textColor="@color/primaryColor"
+              android:textStyle="bold"
+              />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      </com.google.android.material.card.MaterialCardView>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/map_height"
+        android:layout_below="@+id/toolbar_user_detail"
+        />
+
+
+  </RelativeLayout>
+
+</RelativeLayout>
+
