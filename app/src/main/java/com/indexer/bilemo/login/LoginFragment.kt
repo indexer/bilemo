@@ -100,16 +100,17 @@ class LoginFragment : Fragment() {
         return isValid
     }
 
-
     private fun checkValidUserName(it: LoginUserUI): Boolean {
         var isUserNameValid = false
-        if (!it.isCorrectUserName) {
-            fragmentLoginDataBinding.username.error = getString(R.string.invalid_username)
-        } else if (!it.hasMinLengthForUserName) {
-            fragmentLoginDataBinding.username.error = getString(R.string.invalid_username)
-        } else {
-            isUserNameValid = true
-            fragmentLoginDataBinding.username.error = null
+        if (fragmentLoginDataBinding.username.editText?.text?.isNotEmpty() == true) {
+            if (!it.isCorrectUserName) {
+                fragmentLoginDataBinding.username.error = getString(R.string.invalid_username)
+            } else if (!it.hasMinLengthForUserName) {
+                fragmentLoginDataBinding.username.error = getString(R.string.invalid_username)
+            } else {
+                isUserNameValid = true
+                fragmentLoginDataBinding.username.error = null
+            }
         }
         return isUserNameValid
     }

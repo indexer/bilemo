@@ -17,13 +17,11 @@ class UserListAdapter(private val onClick: (UserResponse) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private var currentUserName: UserResponse? = null
         private val binding = UserItemBinding.bind(itemView)
-
         init {
             itemView.setOnClickListener {
                 currentUserName?.let { onClick(it) }
             }
         }
-
         fun bind(user: UserResponse) {
             currentUserName = user
             setUserPersonalInformation(user, binding)
@@ -44,13 +42,23 @@ class UserListAdapter(private val onClick: (UserResponse) -> Unit) :
 }
 
 fun setUserPersonalInformation(it: UserResponse, binding: UserItemBinding) {
-    binding.userName.text = """Name : ${it.username}"""
+    val context = binding.root.context
+    val stringBuilder = StringBuilder()
+    stringBuilder.append(context.getString(R.string.user_name)).append(it.username)
+    binding.userName.text = stringBuilder.toString()
+    val addressStringBuilder = StringBuilder()
     val addressValue =
         it.address.suite + " , " + it.address.street + " , " + it.address.city + " , " + it.address.zipcode
-    val website = it.website
-    binding.userAddress.text = """Address : $addressValue"""
-    binding.userWebsite.text = "Website : $website"
-    binding.userEmail.text = """Email : ${it.email}"""
+    binding.userAddress.text =
+        addressStringBuilder.append(binding.userAddress.context.getString(R.string.address))
+            .append(addressValue)
+    val websiteStringBuilder = StringBuilder()
+
+    binding.userWebsite.text =
+        websiteStringBuilder.append(context.getString(R.string.website)).append(it.website)
+    val emailStringBuilder = StringBuilder()
+    binding.userEmail.text =
+        emailStringBuilder.append(context.getString(R.string.email)).append(it.email)
 }
 
 object UserDiffCallback : DiffUtil.ItemCallback<UserResponse>() {

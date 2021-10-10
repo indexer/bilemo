@@ -95,7 +95,7 @@ class UserDetailFragment : Fragment(), PermissionRequest.Listener {
             val location = Location("default")
             location.latitude = it.address.geo.lat.toDouble()
             location.longitude = it.address.geo.lng.toDouble()
-            setUserPersonalInformation(it)
+            setUserPersonalInformation(it, userDetailBinding)
             try {
                 showUserLocationMap(location = location, it.name, googleMap)
             } catch (e: UninitializedPropertyAccessException) {
@@ -109,17 +109,30 @@ class UserDetailFragment : Fragment(), PermissionRequest.Listener {
 
     }
 
-
-    private fun setUserPersonalInformation(it: UserResponse) {
-        userDetailBinding.userName.text = """Name : ${it.username}"""
+    private fun setUserPersonalInformation(it: UserResponse, binding: FragmentUserDetailBinding) {
+        val context = binding.root.context
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(context.getString(R.string.user_name)).append(it.username)
+        binding.userName.text = stringBuilder.toString()
+        val addressStringBuilder = StringBuilder()
         val addressValue =
             it.address.suite + " , " + it.address.street + " , " + it.address.city + " , " + it.address.zipcode
-        val website = it.website
-        userDetailBinding.userAddress.text = """Address : $addressValue"""
-        userDetailBinding.userWebsite.text = "Website : $website"
-        userDetailBinding.userEmail.text = """Email : ${it.email}"""
-        userDetailBinding?.userCompanyName.text = """Company : ${it.company.companyName}"""
+        binding.userAddress.text =
+            addressStringBuilder.append(binding.userAddress.context.getString(R.string.address))
+                .append(addressValue)
+        val websiteStringBuilder = StringBuilder()
+
+        binding.userWebsite.text =
+            websiteStringBuilder.append(context.getString(R.string.website)).append(it.website)
+        val emailStringBuilder = StringBuilder()
+        binding.userEmail.text =
+            emailStringBuilder.append(context.getString(R.string.email)).append(it.email)
+        val companyStringBuilder = StringBuilder()
+        userDetailBinding.userCompanyName.text =
+            companyStringBuilder.append(getString(R.string.company)).append(it.company.companyName)
+
     }
+
 
     private fun showUserLocationMap(location: Location?, string: String, googleMap: GoogleMap?) {
         when {
